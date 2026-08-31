@@ -1,357 +1,956 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lorenzo Repetto - Senior Backend Developer & Software Architecture Portfolio">
+  <title>Lorenzo Repetto | Senior Backend Developer</title>
+  <link rel="shortcut icon" href="favicon.png" type="image/png">
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --bg-card: #111827;
+      --bg-card-hover: #162032;
+      --border: #1f2937;
+      --border-focus: #38bdf8;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --accent: #818cf8;
+      --tag-bg: rgba(56, 189, 248, 0.08);
+      --tag-border: rgba(56, 189, 248, 0.2);
+      --tag-text: #7dd3fc;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  <link rel="shortcut icon" href="favicon.png"/>
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-  <title>Lorenzo Repetto - Portfolio</title>
+    /* Ambient Background Glow */
+    .ambient-glow {
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(129, 140, 248, 0.03) 50%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
 
-  <!-- Custom fonts for this template -->
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    /* Navigation Bar */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(11, 15, 23, 0.8);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 16px 0;
+    }
 
-  <!-- Custom styles for this template -->
-  <link href="css/resume.css" rel="stylesheet">
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .logo-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+    }
+
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: flex;
+      background: #1e293b;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: #0b0f17;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* Action Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #1e293b;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    .btn-primary:hover {
+      background: #283548;
+      border-color: var(--border-focus);
+      color: var(--primary);
+    }
+
+    .btn-accent {
+      background: var(--primary);
+      color: #0b0f17;
+      border: 1px solid var(--primary);
+    }
+
+    .btn-accent:hover {
+      background: #7dd3fc;
+      transform: translateY(-1px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 40px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--tag-text);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero-summary {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+      max-width: 840px;
+      margin-bottom: 32px;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      transition: border-color 0.2s ease;
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-focus);
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      font-family: var(--font-mono);
+      margin-bottom: 2px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Section Styling */
+    section.content-section {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      transition: all 0.2s ease;
+    }
+
+    .skill-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .skill-category-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-category-content {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Experience Timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .timeline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .timeline-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .job-title-group h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .company-name {
+      color: var(--primary);
+    }
+
+    .domain-tag {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--tag-text);
+      background: var(--tag-bg);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--tag-border);
+    }
+
+    .timeline-bullets {
+      list-style: none;
+      margin-top: 12px;
+    }
+
+    .timeline-bullets li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      color: #cbd5e1;
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+
+    .timeline-bullets li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .timeline-bullets li strong {
+      color: var(--text-main);
+    }
+
+    /* Education & Languages Grid */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .edu-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+
+    .edu-degree {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .edu-school {
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .edu-status {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.88rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 2.1rem;
+      }
+      .timeline-card {
+        padding: 18px 20px;
+      }
+      .hero-links {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
+<body>
 
-<body id="page-top">
-  <!-- sidebar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">
-      <span class="d-block d-lg-none">Lorenzo Repetto</span>
-      <span class="d-none d-lg-block">
-        <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="img/perfil.jpg" alt="">
-      </span>
+<div class="ambient-glow"></div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="container nav-wrapper">
+    <a href="#" class="logo-area">
+      <img src="img/perfil.jpg" alt="Lorenzo Repetto" class="logo-avatar" onerror="this.style.display='none'">
+      <span class="logo-text">Lorenzo Repetto</span>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#about">Sobre mí</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#experience">Portfolio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#skills">Habilidades</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#education">Educación</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#awards">Logros</a>
-        </li> -->
-      </ul>
+
+    <div class="nav-actions">
+      <!-- Language Switcher -->
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-es" onclick="setLanguage('es')">ES</button>
+        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+      </div>
+
+      <!-- CV Download Button -->
+      <a href="Lorenzo_Repetto_CV_ES.pdf" id="btn-cv-download" download class="btn btn-accent">
+        <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        <span id="txt-download-cv">Descargar CV</span>
+      </a>
     </div>
-  </nav>
-  <!-- sidebar -->
+  </div>
+</header>
 
-  <div class="container-fluid p-0">
+<!-- Main Container -->
+<main class="container">
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
-      <div class="w-100">
-        <h1 class="mb-0">Lorenzo
-          <span class="text-primary">Repetto</span>
-        </h1>
-        <div class="subheading mb-5">La Plata · Buenos Aires, Argentina · +54 9 2221 41-1872 ·
-          <a href="mailto:lorenzorepetto28@gmail.com">lorenzorepetto28@gmail.com</a>
-        </div>
-        <p class="lead mb-5">
-          &nbsp;&nbsp;&nbsp;Analista Programador Universitario, y estudiante avanzado de la carrera Licenciatura en Sistemas en la Facultad de Informática de La Plata.
-          <br><br>
-          &nbsp;&nbsp;&nbsp;Me dedico principalmente al desarrollo fullstack, campo en el cual estoy en constante crecimiento y aprendizaje. Me considero una persona proactiva y resolutiva, con actitud positiva frente a los problemas. Veo los desafíos y los cambios como oportunidades. Disfruto de trabajar en equipo pero también soy autónomo.
-        </p>
-        <div class="social-icons">
-          <a href="https://www.linkedin.com/in/lorenzorepetto" target="_blank">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://github.com/lorenzorepetto" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-          <!-- <a href="https://www.facebook.com/loren.repetto.9" target="_blank">
-            <i class="fab fa-facebook-f"></i>
-          </a> -->
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      <span id="txt-badge">Senior Backend Developer · Software Architecture</span>
+    </div>
+
+    <h1 class="hero-title">
+      Lorenzo Repetto<br>
+      <span class="gradient-text" id="txt-hero-headline">Backend & Distributed Systems</span>
+    </h1>
+
+    <div class="hero-subtitle" id="txt-hero-sub">
+      La Plata, Buenos Aires, Argentina · Analista Programador Universitario (UNLP)
+    </div>
+
+    <p class="hero-summary" id="txt-hero-summary">
+      Desarrollador Backend con más de 6 años de experiencia, enfocado en arquitectura de software, microservicios y sistemas distribuidos. Mi especialidad es el desarrollo backend, con sólida versatilidad en entornos fullstack. Me motiva resolver problemas técnicos complejos, diseñar soluciones escalables y escribir código mantenible. Además del desarrollo técnico, cuento con experiencia liderando proyectos técnicos y coordinando iniciativas dentro del equipo. Me mantengo aprendiendo continuamente a través de literatura técnica, proyectos personales y la formación académica. Soy Analista Programador Universitario egresado de la Universidad Nacional de La Plata (UNLP), actualmente realizando la tesis para la Licenciatura en Sistemas de Información.
+    </p>
+
+    <div class="hero-links">
+      <a href="mailto:lorenzorepetto28@gmail.com" class="btn btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <span>lorenzorepetto28@gmail.com</span>
+      </a>
+      <a href="https://linkedin.com/in/lorenzorepetto" target="_blank" class="btn btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://github.com/lorenzorepetto" target="_blank" class="btn btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+
+    <!-- Quick Metrics -->
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-number">+6</div>
+        <div class="stat-label" id="txt-stat-exp">Años de Experiencia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Java & Cloud</div>
+        <div class="stat-label" id="txt-stat-focus">Stack Principal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">UNLP</div>
+        <div class="stat-label" id="txt-stat-edu">Analista Programador / Tesis Licenciatura</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="content-section" id="skills">
+    <div class="section-header">
+      <h2 class="section-title" id="txt-skills-title">Áreas de Experiencia</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-category-title" id="txt-skill-cat1">🏗️ Arquitectura & Desarrollo</div>
+        <div class="skill-category-content">
+          <strong>Java (Spring Boot)</strong>, <strong>Python (Data pipelines, Airflow, Pandas)</strong>, <strong>TypeScript / JS (React, Next.js, Angular)</strong>, <strong>Flutter</strong>, Microservicios, Event-Driven, REST/GraphQL, protocolos de comunicación (HTTP, gRPC, WebSockets), Clean Architecture, SOLID, Design Patterns, SQL & NoSQL (relacional, orientado a documentos, caché).
         </div>
       </div>
-    </section>
 
-    <hr class="m-0">
-
-    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
-      <div class="w-100">
-        <h2 class="mb-0">Portfolio</h2>
-        <div class="subheading mb-2">últimos proyectos realizados</div>
-        
-        <div class="grid">
-					<figure class="effect-zoe">
-						<img src="img/zeppelin.png" alt="img25"/>
-						<figcaption>
-							<h2>Zeppelin <span>Pedidos</span></h2>
-							<p class="icon-links">
-								<a target="_blank" href="https://zeppelinok.com"><span class="icon-eye"></span></a>		
-							</p>
-							<p class="description">
-                Aplicación para negocio de pedidos online. Backend utilizando Firebase Cloud Firestore y Firebase Storage.
-                 Frontend desarrollado en Angular. Trabajo realizado en equipo.
-              </p>
-						</figcaption>			
-					</figure>
-					<figure class="effect-zoe">
-						<img src="img/chatapp4.jpg" alt="img26"/>
-						<figcaption>
-							<h2>Chat <span>App</span></h2> 
-							<p class="icon-links">
-								<a target="_blank" href="https://login-app-dd98b.firebaseapp.com"><span class="icon-eye"></span></a>
-							</p>
-							<p class="description p-1">Pequeña aplicación de chat. Backend desarrollado en NodeJS utilizando Express y SocketIO, 
-                y MongoDB para la base de datos. Frontend desarrollado en Angular utilizando el patrón Redux. 
-                Autenticación por medio de Auth0. Único desarrollador.
-              </p>
-						</figcaption>			
-          </figure>
-          <figure class="effect-zoe">
-						<img src="img/clinica.jpg" alt="img25"/>
-						<figcaption>
-							<h2>Clínica de <span>Mascotas</span></h2>
-							<!-- <p class="icon-links">
-								<a target="_blank" href="https://zeppelinok.com"><span class="icon-eye"></span></a>		
-							</p> -->
-							<p class="description p-2">
-                Aplicación para la administración de una clínica de mascotas. Backend desarrollado en JavaEE 
-                utilizando Spring MVC, Hibernate, MySQL, JWT. Frontend desarrollado en Angular. Trabajo realizado en equipo. 
-              </p>
-						</figcaption>			
-          </figure>
-          <figure class="effect-zoe">
-						<img src="img/laslilas.jpg" alt="img25"/>
-						<figcaption>
-							<h2>Consultorio <span>Las Lilas</span></h2>
-							<p class="icon-links">
-								<a target="_blank" href="https://laslilasodontologia.com/"><span class="icon-eye"></span></a>		
-							</p>
-							<p class="description">
-                Página web estática para Las Lilas Consultorio Odontológico Integral. Único desarrollador.
-              </p>
-						</figcaption>			
-					</figure>
-				</div>
-
+      <div class="skill-card">
+        <div class="skill-category-title" id="txt-skill-cat2">☁️ Cloud, Infraestructura & Observabilidad</div>
+        <div class="skill-category-content">
+          <strong>AWS (Fargate, Lambda, API Gateway, RDS, ElastiCache, S3)</strong>, <strong>Firebase</strong>, Docker, Kubernetes, Terraform, GitHub Actions, GitLab CI/CD, Datadog, New Relic.
+        </div>
       </div>
 
-    </section>
-    
-    <hr class="m-0">
-
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="skills">
-      <div class="w-100">
-        <h2 class="mb-0">Habilidades</h2>
-
-        <div class="subheading mb-3">FRONTEND</div>
-          <ul class="list-inline dev-icons">
-            <li class="list-inline-item">
-              <img src="./img/angular.png" alt="Angular">
-            </li>
-            <li class="list-inline-item">
-              <img class="icono-react" src="./img/react.png" alt="React">
-            </li>
-            <li class="list-inline-item">
-              <img src="./img/redux.png" alt="Redux">
-            </li>
-            <li class="list-inline-item">
-              <img class="icono" src="./img/js.png" alt="JavaScript">
-            </li>
-            <li class="list-inline-item">
-              <img class="icono" src="./img/css.png" alt="CSS">
-            </li>
-            <li class="list-inline-item">
-              <img class="icono" src="./img/html.png" alt="HTML5">
-            </li>
-          </ul>
-        
-        <br>
-        <div class="subheading mb-3 mt-3">BACKEND</div>
-            <ul class="list-inline dev-icons">
-              <li class="list-inline-item">
-                <img src="./img/node.png" alt="NodeJS">
-              </li>
-              <li class="list-inline-item">
-                <img class="icono" style="width: 120px;" src="./img/java.png" alt="Java">
-              </li>
-              <li class="list-inline-item">
-                <img class="icono" src="./img/spring.png" alt="Spring MVC">
-              </li>
-              <li class="list-inline-item">
-                <img class="icono" src="./img/hibernate.png" alt="Hibernate Persistence">
-              </li>
-            </ul>
-        <br>
-        <div class="subheading mb-3 mt-3">Bases de datos</div>
-          <ul class="list-inline dev-icons">
-            <li class="list-inline-item">
-              <img class="icono" style="width: 120px;" src="./img/mysql.png" alt="MySQL">
-            </li>
-            <li class="list-inline-item">
-              <img class="icono ancho" src="./img/mongo.png" alt="MongoDB">
-            </li>
-
-            <li class="list-inline-item">
-              <img class="icono mt-3" src="./img/firebase.png" alt="Firebase">
-            </li>
-          </ul>
-        <br>
-        <div class="subheading mb-3 mt-3">Herramientas</div>
-            <ul class="list-inline dev-icons">
-              <li class="list-inline-item">
-                <img src="./img/npm.png" alt="NPM">
-              </li>
-              
-              <li class="list-inline-item">
-                <img class="icono" src="./img/git2.png" alt="Git">
-              </li>
-              <li class="list-inline-item">
-                <img class="icono" src="./img/github.png" alt="GitHub">
-              </li>
-              <li class="list-inline-item">
-                <img class="icono" src="./img/gitlab.png" alt="GitLab">
-              </li>
-              <li class="list-inline-item">
-                <img class="icono" src="./img/heroku.png" alt="Heroku">
-              </li>
-            </ul>
-    </section>
-    
-    <hr class="m-0">
-    
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
-      <div class="w-100">
-        <h2 class="mb-3">Educación</h2>
-
-        <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-3">
-          <div class="resume-content">
-            <h3 class="mb-2">Facultad de Informática UNLP</h3>
-            <div class="subheading">Licenciatura en Sistemas</div>
-            <div>79.41% Completado</div>
-            <p>Promedio: 8.04</p>
-
-            <div class="subheading mt-3">Analista Programador Universitario</div>
-            <div>100% Completado</div>
-            <p>Promedio: 8.12</p>
-
-
-          </div>
-          <div class="resume-date text-md-right">
-            <span class="text-primary">2017 - Actualidad</span>
-          </div>
+      <div class="skill-card">
+        <div class="skill-category-title" id="txt-skill-cat3">👥 Coordinación Técnica & Metodologías</div>
+        <div class="skill-category-content" id="txt-skill-cat3-body">
+          Coordinación de iniciativas técnicas, SCRUM / Kanban, GitFlow, Spec-Driven Development (SDD), alineación técnica con producto.
         </div>
-
-        <div class="resume-item d-flex flex-column flex-md-row justify-content-between">
-          <div class="resume-content">
-            <h3 class="mb-2">New Oxford Institute</h3>
-            <div class="subheading mb-0">Inglés</div>
-            <p>Conversation and Grammar for Adults</p>
-          </div>
-          <div class="resume-date text-md-right">
-            <span class="text-primary">2018 - Actualidad</span>
-          </div>
-        </div>
-
       </div>
-    </section>
-    
+    </div>
+  </section>
 
-    <hr class="m-0">
+  <!-- Experience Timeline -->
+  <section class="content-section" id="experience">
+    <div class="section-header">
+      <h2 class="section-title" id="txt-exp-title">Experiencia Profesional</h2>
+    </div>
 
-    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="contact">
-      <div class="w-100">
-        <h2 class="mb-5">Contacto</h2>
-        <div class="subheading mb-3">
-          <strong>Teléfono</strong> · +54 9 2221 41-1872
-        </div>
-        <div class="subheading mb-3">
-          <strong>email</strong> · <a href="mailto:lorenzorepetto28@gmail.com">lorenzorepetto28@gmail.com</a>
-        </div>
-        <div class="subheading mb-3">
-          <strong>Otros</strong>
-        </div>
-        <div class="social-icons">
-          <a href="https://www.linkedin.com/in/lorenzorepetto" target="_blank">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://github.com/lorenzorepetto" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-          <!-- <a href="https://www.facebook.com/loren.repetto.9" target="_blank">
-            <i class="fab fa-facebook-f"></i>
-          </a> -->
-        </div>
-       
+    <div class="timeline" id="timeline-container">
+      <!-- Injected dynamically via JS based on selected language -->
+    </div>
+  </section>
 
+  <!-- Education & Languages -->
+  <section class="content-section" id="education">
+    <div class="section-header">
+      <h2 class="section-title" id="txt-edu-title">Educación & Idiomas</h2>
+    </div>
+
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree" id="txt-edu-d1">Analista Programador Universitario</div>
+        <div class="edu-school">Universidad Nacional de La Plata (UNLP)</div>
+        <div class="edu-status" id="txt-edu-s1">Graduado</div>
       </div>
-    </section>
 
+      <div class="edu-card">
+        <div class="edu-degree" id="txt-edu-d2">Licenciatura en Sistemas de Información</div>
+        <div class="edu-school">Universidad Nacional de La Plata (UNLP)</div>
+        <div class="edu-status" id="txt-edu-s2">En etapa de tesis</div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-degree" id="txt-lang-title">Idiomas</div>
+        <div class="edu-school" id="txt-lang-es">Español: Nativo</div>
+        <div class="edu-status" id="txt-lang-en">Inglés: Intermedio / Comunicación profesional técnica</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-links">
+      <a href="mailto:lorenzorepetto28@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/lorenzorepetto" target="_blank">LinkedIn</a>
+      <a href="https://github.com/lorenzorepetto" target="_blank">GitHub</a>
+    </div>
+    <p>© 2026 Lorenzo Repetto · Senior Backend Developer</p>
+  </div>
+</footer>
+
+<!-- Interactive Content & Translation Script -->
+<script>
+  const experiences = {
+    es: [
+      {
+        role: "Senior Java Developer & Coordinator",
+        company: "BetWarrior",
+        domain: "(Product)",
+        date: "08/2024 – Actualidad",
+        bullets: [
+          "Coordinación técnica de una célula de desarrollo de 5 ingenieros (3 Backend, 2 Frontend), facilitando la priorización técnica, alineación con producto y entrega continua de valor.",
+          "Diseño y construcción de un motor in-house de <strong>Onboarding y KYC multi-país (Argentina y Brasil) y multi-marca</strong> en Java 17+, desacoplando al negocio de soluciones de terceros y permitiendo adaptar dinámicamente los flujos de validación según la región.",
+          "Implementación de mecanismos de resiliencia frente a servicios externos mediante patrones de tolerancia a fallos, trazabilidad distribuida (correlation IDs) y capas de caché distribuida en <strong>AWS ElastiCache</strong>.",
+          "Migración masiva de la base de usuarios y datos biométricos históricos hacia nuevos proveedores de identidad, orquestando pipelines de datos seguros y procesos asíncronos con cero tiempo de inactividad.",
+          "Rediseño del esquema de permisos del Backoffice corporativo hacia un modelo granular de roles (RBAC) multi-tenant, permitiendo gestionar accesos segmentados y seguros para distintas marcas.",
+          "Adopción e impulso en el equipo de metodologías <strong>Spec-Driven Development (SDD)</strong> asistidas por herramientas de IA, optimizando la etapa de diseño técnico y acelerando los tiempos de delivery."
+        ]
+      },
+      {
+        role: "Software Engineer",
+        company: "Inviu",
+        domain: "(Digital Ops)",
+        date: "11/2022 – 12/2023",
+        bullets: [
+          "Diseño y desarrollo de soluciones integrales para automatizar procesos financieros y operativos manuales de la trading desk, en estrecha colaboración con stakeholders de negocio.",
+          "Creación e integración de un pipeline de datos en <strong>Apache Airflow (Python)</strong> consumiendo APIs REST de BYMA (SDIB) con lógica de correlación de punteros para importar órdenes bursátiles en tiempo real.",
+          "Optimización de procesos: reducción del intervalo de actualización de órdenes <strong>de 1 hora a solo 3 minutos</strong> y reducción del tiempo de ejecución del script <strong>de 4 minutos a menos de 1 minuto</strong> mediante conexiones TCP persistentes.",
+          "Construcción de una consola administrativa interna con Next.js y Appsmith para el monitoreo y reprocesamiento autónomo de flujos de datos por parte de operaciones."
+        ]
+      },
+      {
+        role: "Ssr Backend Developer",
+        company: "Ualá",
+        domain: "(Product Engineering - Créditos)",
+        date: "07/2022 – 11/2022",
+        bullets: [
+          "Participación activa en el squad de desarrollo para el lanzamiento del producto Loans (Préstamos) en el mercado de México.",
+          "Diseño e implementación de la capa de <strong>Backend for Frontend (BFF)</strong> y orquestación con funciones AWS Lambda en Java 11, API Gateway, DynamoDB y AppSync (GraphQL), optimizando la latencia de carga en aplicaciones móviles.",
+          "Desarrollo de infraestructura como código utilizando <strong>Terraform y Terragrunt</strong> bajo una arquitectura modular DRY, acelerando los despliegues de entornos a minutos."
+        ]
+      },
+      {
+        role: "Ssr Software Engineer (Backend)",
+        company: "Mercado Libre",
+        domain: "(Depto FBI - Finance and Billing Info)",
+        date: "02/2021 – 07/2022",
+        bullets: [
+          "Desarrollo backend en el equipo core de Contabilidad (Accounting) con ownership de iniciativas end-to-end y despliegue productivo multi-país, soportando cargas de hasta <strong>10k RPM</strong>.",
+          "Migración y rediseño de un sistema legacy (\"Ratably\" en Kotlin/MySQL) hacia un microservicio modular basado en eventos con <strong>Java 11, Spring Boot y Clean Architecture</strong>, eliminando la sobrecarga de recreación diaria de tablas en MySQL.",
+          "Planificación y ejecución de una estrategia de rollout progresivo por país, garantizando cero pérdida de datos transaccionales activos y logrando una calificación de desempeño de <strong>5/5</strong> en el Quarter.",
+          "Referente técnico y mantenimiento del servicio crítico de facturación <code>fbi-receipts</code>, gestionando guardias productivas, alertas y monitores en Datadog y New Relic."
+        ]
+      },
+      {
+        role: "Fullstack Developer",
+        company: "Technisys",
+        domain: "(Cliente: Banco Falabella Perú)",
+        date: "08/2020 – 02/2021",
+        bullets: [
+          "Desarrollo frontend principal en la construcción integral de la aplicación web de banca corporativa (B2B) para clientes empresariales de Banco Falabella Perú, liderando el desarrollo en <strong>Angular 9</strong>.",
+          "Co-diseño e integración de APIs transaccionales en <strong>Java y Spring Boot</strong> para la comunicación segura con el core bancario.",
+          "Contenedorización de microservicios con Docker y configuración de charts de Helm para la orquestación en Kubernetes mediante GitLab CI/CD."
+        ]
+      },
+      {
+        role: "Software Developer",
+        company: "Grupo Mercel",
+        domain: "(Cliente: Swiss Medical)",
+        date: "04/2020 – 08/2020",
+        bullets: [
+          "Desarrollo de integraciones de backend empresarial utilizando Java, Apache Camel y JBoss Fuse para conectar sistemas corporativos de salud y bases de datos Sybase.",
+          "Desarrollo de interfaces y módulos móviles en React Native y Redux para aplicaciones de gestión de servicios médicos."
+        ]
+      }
+    ],
+    en: [
+      {
+        role: "Senior Java Developer & Coordinator",
+        company: "BetWarrior",
+        domain: "(Product)",
+        date: "08/2024 – Present",
+        bullets: [
+          "Technical coordination of a 5-engineer development cell (3 Backend, 2 Frontend), streamlining backlog prioritization, product alignment, and continuous value delivery.",
+          "Design and development of an in-house **multi-country (Argentina & Brazil) and multi-brand Onboarding & KYC engine** in Java 17+, decoupling business operations from third-party vendor lock-in.",
+          "Engineered third-party service resilience using fault-tolerant integration patterns, distributed tracing (correlation IDs), and distributed caching with **AWS ElastiCache**.",
+          "Executed a zero-downtime mass migration of user databases and historical biometric records to new identity verification providers via secure asynchronous data pipelines.",
+          "Redesigned the corporate Backoffice permission architecture into a fine-grained, multi-tenant Role-Based Access Control (RBAC) model across distinct operating brands.",
+          "Championed the adoption of **Spec-Driven Development (SDD)** methodologies assisted by AI tools, optimizing technical design and accelerating delivery cycles."
+        ]
+      },
+      {
+        role: "Software Engineer",
+        company: "Inviu",
+        domain: "(Digital Ops)",
+        date: "11/2022 – 12/2023",
+        bullets: [
+          "Design and development of end-to-end automation solutions for trading desk financial and operational workflows, collaborating closely with business stakeholders.",
+          "Creation and integration of a real-time data ingestion pipeline using **Apache Airflow (Python)**, consuming BYMA (SDIB) REST APIs with pointer correlation logic.",
+          "Process optimization: reduced order processing interval **from 1 hour to 3 minutes** and script execution time **from 4 minutes to under 1 minute** via persistent TCP connections.",
+          "Built an internal operations management dashboard with Next.js and Appsmith for automated monitoring and error self-healing."
+        ]
+      },
+      {
+        role: "Ssr Backend Developer",
+        company: "Ualá",
+        domain: "(Product Engineering - Loans)",
+        date: "07/2022 – 11/2022",
+        bullets: [
+          "Key engineering contributor in the squad launching the digital Loans product in the Mexican market.",
+          "Designed and built the **Backend for Frontend (BFF)** layer orchestrating Java 11 AWS Lambda functions, API Gateway, DynamoDB, and AppSync (GraphQL).",
+          "Developed Infrastructure as Code using **Terraform and Terragrunt** under a DRY modular pattern, reducing environment provisioning time to minutes."
+        ]
+      },
+      {
+        role: "Ssr Software Engineer (Backend)",
+        company: "Mercado Libre",
+        domain: "(FBI Dept - Finance and Billing Info)",
+        date: "02/2021 – 07/2022",
+        bullets: [
+          "Backend developer on the core Accounting team with end-to-end ownership of cross-country product initiatives supporting traffic peaks up to **10k RPM**.",
+          "Architected and executed the migration of a legacy billing system (\"Ratably\" Kotlin/MySQL) into an event-driven microservice using **Java 11, Spring Boot, and Clean Architecture**.",
+          "Engineered a progressive country-by-country rollout strategy with zero data loss on active financial transactions, earning a **5/5 performance rating** in the Quarter.",
+          "On-call technical point of contact for the critical `fbi-receipts` billing service, managing distributed tracing and monitors in Datadog and New Relic."
+        ]
+      },
+      {
+        role: "Fullstack Developer",
+        company: "Technisys",
+        domain: "(Client: Banco Falabella Peru)",
+        date: "08/2020 – 02/2021",
+        bullets: [
+          "Lead frontend developer for the end-to-end delivery of a corporate banking web application (B2B) for Banco Falabella Peru business clients, building the interface in **Angular 9**.",
+          "Co-designed and integrated transactional APIs using **Java and Spring Boot** for secure communication with core banking engines.",
+          "Containerized microservices with Docker and maintained Helm charts for Kubernetes orchestration via GitLab CI/CD."
+        ]
+      },
+      {
+        role: "Software Developer",
+        company: "Grupo Mercel",
+        domain: "(Client: Swiss Medical)",
+        date: "04/2020 – 08/2020",
+        bullets: [
+          "Developed enterprise backend integrations using Java, Apache Camel, and JBoss Fuse to connect corporate healthcare systems and Sybase databases.",
+          "Built mobile screens and business modules using React Native and Redux for medical service management applications."
+        ]
+      }
+    ]
+  };
+
+  const uiTexts = {
+    es: {
+      badge: "Senior Backend Developer · Software Architecture",
+      heroHeadline: "Backend & Sistemas Distribuidos",
+      heroSub: "La Plata, Buenos Aires, Argentina · Analista Programador Universitario (UNLP)",
+      heroSummary: "Desarrollador Backend con más de 6 años de experiencia, enfocado en arquitectura de software, microservicios y sistemas distribuidos. Mi especialidad es el desarrollo backend, con sólida versatilidad en entornos fullstack. Me motiva resolver problemas técnicos complejos, diseñar soluciones escalables y escribir código mantenible. Además del desarrollo técnico, cuento con experiencia liderando proyectos técnicos y coordinando iniciativas dentro del equipo. Me mantengo aprendiendo continuamente a través de literatura técnica, proyectos personales y la formación académica. Soy Analista Programador Universitario egresado de la Universidad Nacional de La Plata (UNLP), actualmente realizando la tesis para la Licenciatura en Sistemas de Información.",
+      downloadCv: "Descargar CV (PDF)",
+      cvFile: "Lorenzo_Repetto_CV_ES.pdf",
+      statExp: "Años de Experiencia",
+      statFocus: "Stack Principal",
+      statEdu: "Analista Programador / Tesis Licenciatura",
+      skillsTitle: "Áreas de Experiencia",
+      skillCat1: "🏗️ Arquitectura & Desarrollo",
+      skillCat2: "☁️ Cloud, Infraestructura & Observabilidad",
+      skillCat3: "👥 Coordinación Técnica & Metodologías",
+      skillCat3Body: "Coordinación de iniciativas técnicas, SCRUM / Kanban, GitFlow, Spec-Driven Development (SDD), alineación técnica con producto.",
+      expTitle: "Experiencia Profesional",
+      eduTitle: "Educación & Idiomas",
+      eduD1: "Analista Programador Universitario",
+      eduS1: "Graduado",
+      eduD2: "Licenciatura en Sistemas de Información",
+      eduS2: "En etapa de tesis",
+      langTitle: "Idiomas",
+      langEs: "Español: Nativo",
+      langEn: "Inglés: Intermedio / Comunicación profesional técnica"
+    },
+    en: {
+      badge: "Senior Backend Developer · Software Architecture",
+      heroHeadline: "Backend & Distributed Systems",
+      heroSub: "La Plata, Buenos Aires, Argentina · Analista Programador Universitario (UNLP)",
+      heroSummary: "Senior Backend Developer with over 6 years of experience focused on software architecture, microservices, and distributed systems. Specialized in backend engineering with solid full-stack versatility. Driven by solving complex technical challenges, building scalable systems, and writing maintainable code. In addition to hands-on development, experienced in leading technical projects and coordinating initiatives across teams. Constantly expanding knowledge through technical literature, personal projects, and academic studies. Holds a degree as Analista Programador Universitario from UNLP, currently completing thesis for a Bachelor's degree in Information Systems.",
+      downloadCv: "Download CV (PDF)",
+      cvFile: "Lorenzo_Repetto_CV_EN.pdf",
+      statExp: "Years Experience",
+      statFocus: "Core Tech Stack",
+      statEdu: "Analista Programador / Bachelor's Thesis",
+      skillsTitle: "Areas of Expertise",
+      skillCat1: "🏗️ Architecture & Development",
+      skillCat2: "☁️ Cloud, Infrastructure & Observability",
+      skillCat3: "👥 Technical Coordination & Methodologies",
+      skillCat3Body: "Technical initiative coordination, SCRUM / Kanban, GitFlow, Spec-Driven Development (SDD), product & engineering alignment.",
+      expTitle: "Professional Experience",
+      eduTitle: "Education & Languages",
+      eduD1: "Analista Programador Universitario",
+      eduS1: "Graduated",
+      eduD2: "Bachelor's Degree in Information Systems",
+      eduS2: "Thesis in progress",
+      langTitle: "Languages",
+      langEs: "Spanish: Native",
+      langEn: "English: Professional Technical Working Proficiency"
+    }
+  };
+
+  let currentLang = 'es';
+
+  function renderTimeline(lang) {
+    const container = document.getElementById('timeline-container');
+    const list = experiences[lang] || experiences.es;
     
-    <!-- <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="awards">
-      <div class="w-100">
-        <h2 class="mb-5">Awards &amp; Certifications</h2>
-        <ul class="fa-ul mb-0">
-          <li>
-            <i class="fa-li fa fa-trophy text-warning"></i>
-            Google Analytics Certified Developer</li>
-          <li>
-            <i class="fa-li fa fa-trophy text-warning"></i>
-            Mobile Web Specialist - Google Certification</li>
-          <li>
-            <i class="fa-li fa fa-trophy text-warning"></i>
-            1<sup>st</sup>
-            Place - University of Colorado Boulder - Emerging Tech Competition 2009</li>
-          <li>
-            <i class="fa-li fa fa-trophy text-warning"></i>
-            1<sup>st</sup>
-            Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)</li>
-          <li>
-            <i class="fa-li fa fa-trophy text-warning"></i>
-            2<sup>nd</sup>
-            Place - University of Colorado Boulder - Emerging Tech Competition 2008</li>
-          <li>
-            <i class="fa-li fa fa-trophy text-warning"></i>
-            1<sup>st</sup>
-            Place - James Buchanan High School - Hackathon 2006</li>
-          <li>
-            <i class="fa-li fa fa-trophy text-warning"></i>
-            3<sup>rd</sup>
-            Place - James Buchanan High School - Hackathon 2005</li>
+    container.innerHTML = list.map(item => `
+      <div class="timeline-card">
+        <div class="timeline-header">
+          <div class="job-title-group">
+            <h3>
+              ${item.role} · <span class="company-name">${item.company}</span>
+              <span class="domain-tag">${item.domain}</span>
+            </h3>
+          </div>
+          <div class="timeline-date">${item.date}</div>
+        </div>
+        <ul class="timeline-bullets">
+          ${item.bullets.map(b => `<li>${b}</li>`).join('')}
         </ul>
       </div>
-    </section> -->
+    `).join('');
+  }
 
-  </div>
+  function setLanguage(lang) {
+    currentLang = lang;
+    const t = uiTexts[lang];
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    // Toggle active class on buttons
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
 
-  <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    // Update UI Texts
+    document.getElementById('txt-badge').textContent = t.badge;
+    document.getElementById('txt-hero-headline').textContent = t.heroHeadline;
+    document.getElementById('txt-hero-sub').textContent = t.heroSub;
+    document.getElementById('txt-hero-summary').textContent = t.heroSummary;
+    document.getElementById('txt-download-cv').textContent = t.downloadCv;
+    
+    const cvLink = document.getElementById('btn-cv-download');
+    cvLink.href = t.cvFile;
+    cvLink.setAttribute('download', t.cvFile);
 
-  <!-- Custom scripts for this template -->
-  <script src="js/resume.min.js"></script>
+    document.getElementById('txt-stat-exp').textContent = t.statExp;
+    document.getElementById('txt-stat-focus').textContent = t.statFocus;
+    document.getElementById('txt-stat-edu').textContent = t.statEdu;
+
+    document.getElementById('txt-skills-title').textContent = t.skillsTitle;
+    document.getElementById('txt-skill-cat1').textContent = t.skillCat1;
+    document.getElementById('txt-skill-cat2').textContent = t.skillCat2;
+    document.getElementById('txt-skill-cat3').textContent = t.skillCat3;
+    document.getElementById('txt-skill-cat3-body').textContent = t.skillCat3Body;
+
+    document.getElementById('txt-exp-title').textContent = t.expTitle;
+    document.getElementById('txt-edu-title').textContent = t.eduTitle;
+    document.getElementById('txt-edu-d1').textContent = t.eduD1;
+    document.getElementById('txt-edu-s1').textContent = t.eduS1;
+    document.getElementById('txt-edu-d2').textContent = t.eduD2;
+    document.getElementById('txt-edu-s2').textContent = t.eduS2;
+    document.getElementById('txt-lang-title').textContent = t.langTitle;
+    document.getElementById('txt-lang-es').textContent = t.langEs;
+    document.getElementById('txt-lang-en').textContent = t.langEn;
+
+    renderTimeline(lang);
+  }
+
+  // Initial render
+  document.addEventListener('DOMContentLoaded', () => {
+    setLanguage('es');
+  });
+</script>
 
 </body>
-
 </html>
